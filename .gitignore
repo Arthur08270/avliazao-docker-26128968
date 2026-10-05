@@ -1,0 +1,9 @@
+.env
+# Copie este arquivo para .env e preencha. O .env NUNCA vai para o Git.
+MATRICULA=26128968
+DOCKERHUB_USER=arthur2700
+
+MARIADB_DATABASE=agrovale_blog
+MARIADB_USER=agrovale
+MARIADB_PASSWORD=troque-esta-senha
+MARIADB_ROOT_PASSWORD=troque-esta-tambem
