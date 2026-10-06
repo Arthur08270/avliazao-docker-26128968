@@ -32,27 +32,36 @@ no Docker Hub, podendo enviar imagens sem utilizar especificamente a senha da co
 
 | # | Instrução | O que estava errado | O que você viu acontecer | Como corrigiu |
 |---|---|---|---|---|
-| 1 | | | | |
+| 1 | Copiar os arquivos do site para a pasta servida pelo Nginx | Faltava o COPY da pasta site/ para /usr/share/nginx/html/ | Ao acessar http://localhost:7068, aparecia a página padrão Welcome to nginx! em vez da página de manutenção | Adicionei COPY site/ /usr/share/nginx/html/ ao Dockerfile |
 | 2 | | | | |
 | 3 | | | | |
 
 6. Qual a diferença entre `-p 7042:80` e `-p 80:7042` no `docker run`? Qual dos dois números é a porta do container?
-
+A opção -p segue o formato PORTA_DO_HOST:PORTA_DO_CONTAINER.
+-p 7042:80 - A porta 7042 do computador é direcionada para a porta 80 do container.
+-p 80:7042 - A porta 80 do computador é direcionada para a porta 7042 do container.
+Portanto, o número à direita dos dois-pontos é a porta do container.
 
 ## Parte 4 · docker-compose.yml
 
 7. No serviço `blog`, por que `WORDPRESS_DB_HOST` recebe `db` e não `localhost`?
+Porque `db` é o nome do serviço do MariaDB no docker-compose.yml. Os serviços compartilham a mesma rede do Docker e podem se localizar pelo nome do serviço.
+Se fosse utilizado `localhost`, o WordPress tentaria acessar o banco dentro do próprio container do WordPress, e não o container do MariaDB.
 
-8. Por que o serviço `db` não publica a porta 3306? Se precisar consultar o banco, como faz sem publicar
-   a porta? Mostre o comando.
+8. Por que o serviço `db` não publica a porta 3306? Se precisar consultar o banco, como faz sem publicar a porta? Mostre o comando.
+O banco não precisa publicar a porta 3306 para o computador porque o WordPress acessa o MariaDB diretamente pela rede interna do Docker usando o nome do serviço `db`.
+Se fosse necessário consultar o banco, seria possível executar o cliente MariaDB dentro do própriocontainer, por exemplo:docker compose exec db mariadb -u agrovale -p agrovale_blog. Assim, não é necessário expor a porta 3306 para o host.
 
 ## Parte 5 · Persistência
 
-9. Quais comandos você usou para derrubar e subir a stack? Qual comando teria apagado o post que você criou,
-   e por quê?
+9. Quais comandos você usou para derrubar e subir a stack? Qual comando teria apagado o post que você criou, e por quê?
+Para derrubar a stack, usei: docker compose down
+Para subir novamente, usei: docker compose up -d
+O comando que poderia apagar o post seria: docker compose down -v
+Isso acontece porque a opção `-v` remove os volumes nomeados da stack. Como os dados do WordPress e do MariaDB estavam armazenados nos volumes, removê-los faria com que os dados persistidos fossem apagados.
 
 10. Código de conclusão impresso pelo verificador:
 
 ```
-(cole aqui)
+AGROVALE-26128968-67097F73
 ```
