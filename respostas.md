@@ -20,8 +20,11 @@ Eu usei a base "FROM nginx:1.27-alpine". O seu tamanho final foi de 73.6 MB
 ## Parte 2 · Docker Hub
 
 3. Nome completo da imagem publicada e link público do repositório no Docker Hub.
+Esse é o nome da imagem: arthur2700/agrovale-portal:1.0-26128968. Esse é o link: https://hub.docker.com/r/arthur2700/agrovale-portal
 
 4. Por que o `docker login` foi feito com um token de acesso e não com a senha da conta?
+O login foi feito com um token de acesso porque ele é uma credencial específica para autenticação 
+no Docker Hub, podendo enviar imagens sem utilizar especificamente a senha da conta.
 
 ## Parte 3 · Página de manutenção
 
@@ -34,6 +37,7 @@ Eu usei a base "FROM nginx:1.27-alpine". O seu tamanho final foi de 73.6 MB
 | 3 | | | | |
 
 6. Qual a diferença entre `-p 7042:80` e `-p 80:7042` no `docker run`? Qual dos dois números é a porta do container?
+
 
 ## Parte 4 · docker-compose.yml
 
